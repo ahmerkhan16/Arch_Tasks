@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO List</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1>TODO LIST</h1>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <form id="add-form">
+                <input 
+                    type="text" 
+                    id="task-input" 
+                    placeholder="Add a new task…" 
+                    autocomplete="off">
+                <button type="submit" id="add-btn" aria-label="Add task">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- Task List -->
+        <ul id="task-list" class="task-list"></ul>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span id="task-count" class="count">0 tasks left</span>
+            
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+
+            <button id="clear-btn" class="clear-btn">Clear completed</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
