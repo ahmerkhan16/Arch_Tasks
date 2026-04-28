@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Connectify | Next-Gen Social Network</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Enhanced Sidebar -->
+        <nav class="sidebar" id="mainSidebar">
+            <div class="logo">
+                <i class="fas fa-share-nodes"></i>
+                <span>Connectify</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-section="feed"><i class="fas fa-home"></i> Feed</li>
+                <li data-section="profile"><i class="fas fa-user-circle"></i> Profile</li>
+                <li data-section="friends"><i class="fas fa-users"></i> Friends <span id="friend-count-badge" class="badge">0</span></li>
+                <li data-section="notifications"><i class="fas fa-bell"></i> Alerts <span id="noti-count-badge" class="badge">0</span></li>
+                <li data-section="requests"><i class="fas fa-user-plus"></i> Requests <span id="req-count-badge" class="badge">0</span></li>
+            </ul>
+            <div class="user-card" id="mini-profile">
+                <img src="https://ui-avatars.com/api/?name=Guest&background=00cec9&color=fff" alt="avatar" id="nav-avatar">
+                <div>
+                    <p class="nav-username" id="navUsername">Guest User</p>
+                    <small><i class="fas fa-circle" style="color:#2ecc71; font-size: 10px;"></i> Online</small>
+                </div>
+            </div>
+        </nav>
+
+        <main class="content">
+            <!-- Feed Section -->
+            <section id="feed" class="section active">
+                <div class="stories-bar">
+                    <div class="story add-story" id="triggerStory"><i class="fas fa-plus"></i><span>Your Story</span></div>
+                    <div class="story" id="storySample1"><img src="https://randomuser.me/api/portraits/women/68.jpg"><span>Emma</span></div>
+                    <div class="story" id="storySample2"><img src="https://randomuser.me/api/portraits/men/32.jpg"><span>Liam</span></div>
+                    <div class="story" id="storySample3"><img src="https://randomuser.me/api/portraits/women/45.jpg"><span>Sofia</span></div>
+                </div>
+
+                <div class="create-post-card glass-card">
+                    <div class="post-header">
+                        <img src="https://ui-avatars.com/api/?name=User" class="avatar-sm" id="input-avatar" alt="avatar">
+                        <textarea id="postInput" placeholder="What's on your mind, creative soul? 🌟"></textarea>
+                    </div>
+                    <div class="post-actions">
+                        <label for="imageInput" class="action-btn"><i class="fas fa-image"></i> Photo/Video</label>
+                        <input type="file" id="imageInput" accept="image/*,video/mp4" hidden>
+                        <label for="mediaInput" class="action-btn"><i class="fas fa-paperclip"></i> Attach</label>
+                        <input type="file" id="mediaInput" accept="image/*,video/*" hidden>
+                        <button class="btn-primary" onclick="createPost()"><i class="fas fa-paper-plane"></i> Post</button>
+                    </div>
+                    <div id="image-preview-container" class="preview-grid"></div>
+                </div>
+
+                <div id="posts-container" class="posts-feed"></div>
+            </section>
+
+            <!-- Profile Section with Privacy & Multimedia -->
+            <section id="profile" class="section">
+                <div class="glass-card profile-card">
+                    <div class="profile-header">
+                        <img src="https://ui-avatars.com/api/?name=User&background=6c5ce7&color=fff" id="profileAvatarLarge" class="profile-avatar">
+                        <h2 id="profileDisplayName">Guest User</h2>
+                        <p><i class="fas fa-globe"></i> <span id="profilePrivacyBadge">Public</span></p>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-user-edit"></i> Display Name</label>
+                        <input type="text" id="username-input" placeholder="Your creative name...">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Privacy Level</label>
+                        <select id="privacy-input">
+                            <option value="Public">🌍 Public (Everyone)</option>
+                            <option value="Friends">👥 Friends Only</option>
+                            <option value="Private">🔒 Private (Only Me)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-upload"></i> Avatar Image</label>
+                        <input type="file" id="avatarUpload" accept="image/*">
+                        <small>Upload custom profile picture</small>
+                    </div>
+                    <button class="btn-primary" onclick="updateProfile()"><i class="fas fa-save"></i> Save Changes</button>
+                </div>
+                <div class="glass-card">
+                    <h3>📊 Your Activity Stats</h3>
+                    <p>Total Posts: <strong id="userPostCount">0</strong></p>
+                    <p>Total Likes Given: <strong id="userLikesGiven">0</strong></p>
+                </div>
+            </section>
+
+            <!-- Friends Section -->
+            <section id="friends" class="section">
+                <div class="glass-card">
+                    <h3><i class="fas fa-user-friends"></i> Your Friends</h3>
+                    <div id="friends-list-container" class="users-list"></div>
+                </div>
+            </section>
+
+            <!-- Notifications Section (real-time simulation) -->
+            <section id="notifications" class="section">
+                <div class="glass-card">
+                    <h3><i class="fas fa-bell"></i> Live Notifications</h3>
+                    <div id="notifications-list" class="notif-scroll"></div>
+                </div>
+            </section>
+
+            <!-- Friend Requests Section -->
+            <section id="requests" class="section">
+                <div class="glass-card">
+                    <h3><i class="fas fa-handshake"></i> Pending Friend Requests</h3>
+                    <div id="requests-list-container" class="users-list"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Comment Modal with enhanced UI -->
+    <div id="comment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeComments()">&times;</span>
+            <h3><i class="fas fa-comments"></i> Conversation</h3>
+            <div id="modal-comments-list" class="comment-thread"></div>
+            <div class="comment-input-area">
+                <input type="text" id="new-comment-text" placeholder="Write a meaningful comment...">
+                <button onclick="submitComment()" class="btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Viewer Modal (Extra) -->
+    <div id="story-modal" class="modal">
+        <div class="modal-content story-viewer">
+            <span class="close" onclick="closeStoryModal()">&times;</span>
+            <div id="story-content"><h3>✨ Your Story Moment ✨</h3><p>Share a memory!</p></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

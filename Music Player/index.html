@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AURA — Music</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- Google Fonts: Syne (display) + DM Sans (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- ========== LOADING SCREEN ========== -->
+  <div id="loader" class="loader">
+    <div class="loader-logo">AURA</div>
+    <div class="loader-bars">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- ========== APP SHELL ========== -->
+  <div class="app" id="app">
+
+    <!-- ---- SIDEBAR ---- -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">AURA</div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-view="home">
+          <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21H3z"/></svg>
+          Home
+        </button>
+        <button class="nav-btn" data-view="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Search
+        </button>
+        <button class="nav-btn" data-view="library">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Library
+        </button>
+      </nav>
+
+      <div class="sidebar-section-label">CATEGORIES</div>
+      <div class="category-pills" id="categoryPills"></div>
+
+      <div class="sidebar-section-label" style="margin-top:2rem">PLAYLISTS</div>
+      <div class="playlist-list" id="sidebarPlaylist"></div>
+
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </aside>
+
+    <!-- ---- MAIN AREA ---- -->
+    <main class="main" id="main">
+
+      <!-- Top Bar -->
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Search songs, artists…"/>
+          <button class="search-clear" id="searchClear">×</button>
+        </div>
+        <div class="topbar-right">
+          <div class="avatar">U</div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content" id="content">
+
+        <!-- Featured Hero -->
+        <section class="hero" id="heroSection">
+          <div class="hero-bg" id="heroBg"></div>
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <span class="hero-label">NOW TRENDING</span>
+            <h1 class="hero-title" id="heroTitle">—</h1>
+            <p class="hero-artist" id="heroArtist">—</p>
+            <div class="hero-actions">
+              <button class="btn-play-hero" id="heroPlayBtn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+                Play Now
+              </button>
+              <button class="btn-ghost" id="heroAddBtn">+ Add to Queue</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Category Filter Row -->
+        <div class="filter-row" id="filterRow"></div>
+
+        <!-- Song Grid -->
+        <section class="songs-section">
+          <div class="section-header">
+            <h2 class="section-title" id="sectionTitle">All Songs</h2>
+            <span class="song-count" id="songCount"></span>
+          </div>
+          <div class="songs-grid" id="songsGrid"></div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ---- NOW PLAYING PANEL ---- -->
+    <aside class="now-playing" id="nowPlaying">
+      <div class="np-header">
+        <span class="np-label">NOW PLAYING</span>
+        <button class="np-close" id="npClose">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Album Art -->
+      <div class="np-artwork-wrap">
+        <div class="np-artwork-glow" id="npGlow"></div>
+        <div class="np-artwork" id="npArtwork">
+          <img src="" alt="Album Art" id="npImg"/>
+          <div class="np-artwork-overlay"></div>
+        </div>
+        <!-- Visualizer rings -->
+        <div class="vis-ring vis-ring-1" id="visRing1"></div>
+        <div class="vis-ring vis-ring-2" id="visRing2"></div>
+      </div>
+
+      <!-- Song Info -->
+      <div class="np-info">
+        <div class="np-meta">
+          <h2 class="np-title" id="npTitle">—</h2>
+          <p class="np-artist" id="npArtist">—</p>
+        </div>
+        <button class="np-like" id="npLike" title="Like">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+
+      <!-- Progress -->
+      <div class="np-progress-wrap">
+        <div class="np-progress-bar" id="npProgressBar">
+          <div class="np-progress-fill" id="npProgressFill">
+            <div class="np-progress-dot"></div>
+          </div>
+        </div>
+        <div class="np-times">
+          <span id="npCurrentTime">0:00</span>
+          <span id="npDuration">0:00</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="np-controls">
+        <button class="ctrl-btn ctrl-sm" id="shuffleBtn" title="Shuffle">
+          <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+        </button>
+        <button class="ctrl-btn ctrl-md" id="prevBtn" title="Previous">
+          <svg viewBox="0 0 24 24"><polygon points="19,20 9,12 19,4"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+        </button>
+        <button class="ctrl-btn ctrl-lg" id="playPauseBtn" title="Play/Pause">
+          <svg class="icon-play" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          <svg class="icon-pause" viewBox="0 0 24 24" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <button class="ctrl-btn ctrl-md" id="nextBtn" title="Next">
+          <svg viewBox="0 0 24 24"><polygon points="5,4 15,12 5,20"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+        </button>
+        <button class="ctrl-btn ctrl-sm" id="repeatBtn" title="Repeat">
+          <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </button>
+      </div>
+
+      <!-- Volume -->
+      <div class="np-volume">
+        <svg class="vol-icon" id="volIcon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path id="volWaves" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        <div class="volume-slider-wrap">
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80"/>
+          <div class="volume-fill" id="volumeFill"></div>
+        </div>
+      </div>
+
+      <!-- Up Next -->
+      <div class="up-next" id="upNext">
+        <div class="sidebar-section-label">UP NEXT</div>
+        <div class="up-next-list" id="upNextList"></div>
+      </div>
+    </aside>
+
+  </div><!-- /app -->
+
+  <!-- ---- MINI PLAYER (mobile sticky) ---- -->
+  <div class="mini-player" id="miniPlayer">
+    <div class="mini-art">
+      <img src="" alt="" id="miniImg"/>
+    </div>
+    <div class="mini-info">
+      <span class="mini-title" id="miniTitle">—</span>
+      <span class="mini-artist" id="miniArtist">—</span>
+    </div>
+    <div class="mini-controls">
+      <button class="ctrl-btn mini-play" id="miniPlayBtn">
+        <svg class="icon-play" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        <svg class="icon-pause" viewBox="0 0 24 24" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <button class="ctrl-btn" id="miniNextBtn">
+        <svg viewBox="0 0 24 24"><polygon points="5,4 15,12 5,20"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+      </button>
+    </div>
+    <div class="mini-progress">
+      <div class="mini-progress-fill" id="miniProgressFill"></div>
+    </div>
+  </div>
+
+  <!-- Hidden Audio Element -->
+  <audio id="audioPlayer" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
